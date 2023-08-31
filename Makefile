@@ -11,7 +11,7 @@ LDFLAGS=-mmcu=$(MCU)
 PORT=\\\\.\\COM3
 BIN=Irrigation_System
 OUT=${BIN}.hex 
-SOURCES = main.c uart.c millis.c
+SOURCES = main.c uart.c millis.c lcd.c
 
 DEBUG?=1
 

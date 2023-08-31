@@ -3,29 +3,30 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "uart.h"
+#include "lcd.h"
 
 #define BIT_SET(a, b) ((a) |= (1ULL << (b)))
 #define BIT_CLEAR(a,b) ((a) &= ~(1ULL<<(b)))
 #define BIT_FLIP(a,b) ((a) ^= (1ULL<<(b)))
 #define BIT_CHECK(a,b) (!!((a) & (1ULL<<(b)))) 
 
-#define SENSOR_POWER_PIN 7
+#define SENSOR_POWER_PIN 0
 #define SENSOR_ANALOG_PIN 0 // Connect the AO pin to the appropriate analog pin
 
 void init_ports() {
     // Set the sensor power pin as an output
-    DDRD |= (1 << SENSOR_POWER_PIN);
+    DDRB |= (1 << SENSOR_POWER_PIN);
 }
 
 void sensor_power_on() {
     // Turn the sensor ON
-    PORTD |= (1 << SENSOR_POWER_PIN);
+    PORTB |= (1 << SENSOR_POWER_PIN);
     _delay_ms(10); // Allow power to settle
 }
 
 void sensor_power_off() {
     // Turn the sensor OFF
-    PORTD &= ~(1 << SENSOR_POWER_PIN);
+    PORTB &= ~(1 << SENSOR_POWER_PIN);
 }
 
 int analog_read(uint8_t pin) {
@@ -54,7 +55,9 @@ void init_adc() {
 
 int main() {
 
-    init_serial();
+    lcd_init();
+    lcd_clear();
+    //init_serial();
     init_ports();
     init_adc(); // Initialize the ADC
 
@@ -65,13 +68,27 @@ int main() {
         _delay_ms(10); // Allow power to settle
         int val = analog_read(SENSOR_ANALOG_PIN);
         sensor_power_off();
-
-        printf("Analog output: %d\n", val);
+        lcd_set_cursor(0,0);
+        //lcd_printf("Analog output: %d\n", val);
         //printf("Moisture Percentage: %d%%\n", (val * 100) / 1023);
+        lcd_set_cursor(0,0);
         int moisturePercentage = 100 - ((float)val / 1023) * 100;
-        printf("Moisture Percentage: %d%%\n", moisturePercentage);
+        int test = moisturePercentage * 1.6;
+        lcd_printf("Moisture: %d%%\n", moisturePercentage);
+        lcd_set_cursor(0,1);
+        lcd_printf("Moist * 1.6: %d%%", test);
+        
+        
+        
+        
+        // printf("Analog output: %d\n", val);
+        // //printf("Moisture Percentage: %d%%\n", (val * 100) / 1023);
+        // int moisturePercentage = 100 - ((float)val / 1023) * 100;
+        // printf("Moisture Percentage: %d%%\n", moisturePercentage);
 
-        _delay_ms(1000);
+
+        _delay_ms(5000);
+        lcd_clear();
     }
 
     return 0;
