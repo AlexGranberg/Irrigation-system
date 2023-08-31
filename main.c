@@ -69,12 +69,12 @@ int main() {
         int val = analog_read(SENSOR_ANALOG_PIN);
         sensor_power_off();
         lcd_set_cursor(0,0);
-        //lcd_printf("Analog output: %d\n", val);
+        lcd_printf("Analog out: %d\n", val);
         //printf("Moisture Percentage: %d%%\n", (val * 100) / 1023);
         lcd_set_cursor(0,0);
         int moisturePercentage = 100 - ((float)val / 1023) * 100;
         int test = moisturePercentage * 1.6;
-        lcd_printf("Moisture: %d%%\n", moisturePercentage);
+        // lcd_printf("Moisture: %d%%  ", moisturePercentage);
         lcd_set_cursor(0,1);
         lcd_printf("Moist * 1.6: %d%%", test);
         
