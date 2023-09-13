@@ -41,7 +41,7 @@ int analog_read(uint8_t pin) {
 void init_adc() {
     // Set the ADC Enable bit and configure the ADC Prescaler to 64
     ADCSRA |= (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1);
-    
+
     // Set the reference voltage to AVCC with external capacitor at AREF pin
     ADMUX |= (1 << REFS0);
 }
