@@ -7,12 +7,12 @@
 #include "bitmacro.h"
 #include "dht22.h"
 #include "yl69.h"
+#include "SSD1306.h"
+#include "Font5x8.h"
 
 
 int main() {
 
-    lcd_init();
-    lcd_clear();
     //init_serial();
     init_ports();
     init_adc(); // Initialize the ADC
@@ -21,41 +21,51 @@ int main() {
 
     _delay_ms(2000);
     
+    GLCD_Setup();
+	GLCD_SetFont(Font5x8, 5, 8, GLCD_Overwrite);
+
     while (true) {
         sensor_power_on();
         _delay_ms(10); // Allow power to settle
         int val = analog_read(SENSOR_ANALOG_PIN);
         sensor_power_off();
-        lcd_set_cursor(0,0);
-        lcd_printf("Analog out: %d", val);
+        GLCD_GotoXY(1, 1);
+        GLCD_PrintString("Analog Humidity: ");
+	    GLCD_PrintInteger(val);
+
         //printf("Moisture Percentage: %d%%\n", (val * 100) / 1023);
-        lcd_set_cursor(0,0);
-        int moisturePercentage = 100 - ((float)val / 1023) * 100;
-        int test = moisturePercentage * 1.6;
-        // lcd_printf("Moisture: %d%%  ", moisturePercentage);
-        lcd_set_cursor(0,1);
-        lcd_printf("Soil: %d%%", moisturePercentage);
         
+        int moisturePercentage = 100 - ((float)val / 1023) * 100;
+        //int test = moisturePercentage * 1.6;
+        // lcd_printf("Moisture: %d%%  ", moisturePercentage);
+        GLCD_GotoXY(1, 16);
+        GLCD_PrintString("Soil humidity: ");
+	    GLCD_PrintInteger(moisturePercentage);
+        GLCD_PrintString("%");
         
         // printf("Analog output: %d\n", val);
         // //printf("Moisture Percentage: %d%%\n", (val * 100) / 1023);
         // int moisturePercentage = 100 - ((float)val / 1023) * 100;
         // printf("Moisture Percentage: %d%%\n", moisturePercentage);
 
-
-        _delay_ms(5000);
-        lcd_clear();
-
         DHT_Status status = DHT_Get(&temperature_int, &humidity_int) ;
             if (status == DHT_Status_Ok) {
-			lcd_set_cursor(0,0);
-			lcd_printf("Hum: %d%%", humidity_int / 10);
-            lcd_set_cursor(0,1);
-			lcd_printf("Temp: %dc", temperature_int / 10);
+			GLCD_GotoXY(1, 31);
+            GLCD_PrintString("Humidity: ");
+	        GLCD_PrintInteger(humidity_int / 10);
+            GLCD_PrintString("%");
+            GLCD_GotoXY(1, 46);
+	        GLCD_PrintString("Temperature: ");
+            GLCD_PrintInteger(temperature_int / 10);
+            GLCD_PrintString("c");
+            GLCD_Render();
 	        }
-            else printf("ERROR %d\n",status);
+            else {GLCD_GotoXY(1, 45);
+	        GLCD_PrintInteger(status);
+            }
+            GLCD_Render();
         _delay_ms(5000);
-        lcd_clear();
+        GLCD_Clear();
     }
 
     return 0;
