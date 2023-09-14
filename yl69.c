@@ -8,18 +8,18 @@
 
 void init_ports() {
     // Set the sensor power pin as an output
-    DDRB |= (1 << SENSOR_POWER_PIN);
+    DDRD |= (1 << SENSOR_POWER_PIN);
 }
 
 void sensor_power_on() {
     // Turn the sensor ON
-    PORTB |= (1 << SENSOR_POWER_PIN);
+    PORTD |= (1 << SENSOR_POWER_PIN);
     _delay_ms(10); // Allow power to settle
 }
 
 void sensor_power_off() {
     // Turn the sensor OFF
-    PORTB &= ~(1 << SENSOR_POWER_PIN);
+    PORTD &= ~(1 << SENSOR_POWER_PIN);
 }
 
 int analog_read(uint8_t pin) {

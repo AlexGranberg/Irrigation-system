@@ -23,7 +23,10 @@ int main() {
 
     _delay_ms(2000);
     
-    //GLCD_Setup();
+    GLCD_Setup();
+    // Disable TWI
+    // TWCR &= ~(1 << TWEN);
+
 	GLCD_SetFont(Font5x8, 5, 8, GLCD_Overwrite);
 
     while (true) {
@@ -33,7 +36,7 @@ int main() {
         int val = analog_read(SENSOR_ANALOG_PIN);
         sensor_power_off();
         int moisturePercentage = 100 - ((float)val / 1023) * 100;
-        printf("%d          ", val);
+        printf("Analog value: %d\n", val);
         
         // GLCD_GotoXY(1, 1);
         // GLCD_PrintString("Analog Humidity: ");
