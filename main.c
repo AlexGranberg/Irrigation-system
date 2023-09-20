@@ -81,10 +81,10 @@ int main() {
     GLCD_SetFont(Font5x8, 5, 8, GLCD_Overwrite);
 
     while (true) {        
-            GLCD_ClearLine(41);
             GLCD_ClearLine(16);
             GLCD_ClearLine(31);
-            // GLCD_Clear();
+            //GLCD_ClearLine(41);
+            //GLCD_Clear();
             // sensor_power_on();
             // _delay_ms(10); // Allow power to settle
             // int val = analog_read(SENSOR_ANALOG_PIN);
@@ -101,7 +101,9 @@ int main() {
                 GLCD_GotoXY(1, 16);
                 GLCD_PrintString("Humidity: ");
                 GLCD_PrintInteger(humidity_int / 10);
-                GLCD_PrintString("%");
+                GLCD_PrintString("%   ");
+                counter++; 
+                GLCD_PrintInteger(counter);
 
                 GLCD_GotoXY(1, 31);
                 GLCD_PrintString("Temperature: ");
@@ -114,13 +116,13 @@ int main() {
                 GLCD_PrintInteger(status);
             }
             
-            GLCD_GotoXY(1, 41);
-            GLCD_PrintString("Pump: OFF");
-            GLCD_GotoXY(60, 41);
-            GLCD_PrintString("- Tics: ");
-            counter++; 
-            GLCD_PrintInteger(counter);
-            GLCD_Render();
+            // GLCD_GotoXY(1, 41);
+            // GLCD_PrintString("Pump: OFF");
+            // GLCD_GotoXY(60, 41);
+            // GLCD_PrintString("- Tics: ");
+            // counter++; 
+            // GLCD_PrintInteger(counter);
+            // GLCD_Render();
             _delay_ms(10000);
     }
 
