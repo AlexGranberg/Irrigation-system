@@ -12,6 +12,7 @@
 #include "Font5x8.h"
 #include "Font4x7.h"
 #include "millis.h"
+#include "toggle_pump.h"
 //#include "timers.h"
 #define LED_PIN PB1
 
@@ -22,6 +23,7 @@ int main() {
     unsigned long soil_sensor_read_time = current_millis;
     unsigned long temp_sensor_read_time = current_millis;
     //init_serial();
+    bool pumpActive = false;
     init_ports();
     init_adc(); // Initialize the ADC
     uint16_t temperature_int = 0;
@@ -38,7 +40,18 @@ int main() {
         if (current_millis - soil_sensor_read_time >= 6000){
             //GLCD_ClearLine(41);
             //GLCD_Clear();
-            read_Soil();
+            uint16_t moisturePercentage = read_Soil();
+           togglePump(moisturePercentage);
+            if(moisturePercentage <= 40 && !pumpActive){
+                 BIT_SET(DDRB, LED_PIN);
+                //togglePump(true);
+                pumpActive = true;
+            }else if(moisturePercentage > 60 && pumpActive){
+                //togglePump(false);
+                 BIT_CLEAR(DDRB, LED_PIN);
+                pumpActive = false;
+            }
+            //read_Soil();
             soil_sensor_read_time = current_millis;
         }
         if (current_millis - temp_sensor_read_time >= 3000){
