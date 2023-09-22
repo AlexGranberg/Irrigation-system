@@ -44,10 +44,8 @@ int main() {
            togglePump(moisturePercentage);
             if(moisturePercentage <= 40 && !pumpActive){
                  BIT_SET(DDRB, LED_PIN);
-                //togglePump(true);
                 pumpActive = true;
             }else if(moisturePercentage > 60 && pumpActive){
-                //togglePump(false);
                  BIT_CLEAR(DDRB, LED_PIN);
                 pumpActive = false;
             }
