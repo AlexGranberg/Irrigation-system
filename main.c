@@ -14,7 +14,7 @@
 #include "millis.h"
 #include "toggle_pump.h"
 //#include "timers.h"
-#define LED_PIN PB1
+#define PUMP PB1
 
 int main() {
     millis_init();
@@ -33,7 +33,7 @@ int main() {
     
     GLCD_Setup();
     GLCD_SetFont(Font5x8, 5, 8, GLCD_Overwrite);
-    BIT_SET(DDRB, LED_PIN);
+    BIT_SET(DDRB, PUMP);
 
     while (true) {
         current_millis = millis_get();
@@ -43,10 +43,10 @@ int main() {
             uint16_t moisturePercentage = read_Soil();
            togglePump(moisturePercentage);
             if(moisturePercentage <= 40 && !pumpActive){
-                 BIT_SET(DDRB, LED_PIN);
+                 BIT_SET(DDRB, PUMP);
                 pumpActive = true;
             }else if(moisturePercentage > 60 && pumpActive){
-                 BIT_CLEAR(DDRB, LED_PIN);
+                 BIT_CLEAR(DDRB, PUMP);
                 pumpActive = false;
             }
             //read_Soil();
@@ -75,7 +75,7 @@ int main() {
                 GLCD_PrintInteger(status);
             }
             temp_sensor_read_time = current_millis;
-            //BIT_FLIP(PORTB, LED_PIN);
+            //BIT_FLIP(PORTB, PUMP);
         }        
 
             
