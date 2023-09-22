@@ -2,12 +2,12 @@
 #include "bitmacro.h"
 #include <stdbool.h>
 
-#define LED_PIN PB1
+#define PUMP PB1
 
 void togglePump(bool active){
     if(active){
-        BIT_SET(PORTB, LED_PIN);
+        BIT_SET(PORTB, PUMP);
     } else{
-        BIT_CLEAR(PORTB, LED_PIN);
+        BIT_CLEAR(PORTB, PUMP);
     }
 }
