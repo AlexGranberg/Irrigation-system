@@ -10,7 +10,7 @@
 #include "dht22.h"
 #include "yl69.h"
 #include "SSD1306.h"
-#include "Font5x8.h"
+//#include "Font5x8.h"
 #include "Font4x7.h"
 #include "millis.h"
 #include "toggle_pump.h"
@@ -19,17 +19,17 @@
 #define PUMP PB1
 
 int main() {
-    millis_init();
-    sei();
-    wdt_enable(WDTO_2S);
-    init_ports();
-    init_adc(); // Initialize the ADC
-    GLCD_Setup();
-    GLCD_SetFont(Font5x8, 5, 8, GLCD_Overwrite);
-    BIT_SET(DDRB, PUMP);
-    BIT_CLEAR(DDRB, PUMP);
-    _delay_ms(1000);
-    //initialize();
+    // millis_init();
+    // sei();
+    // wdt_enable(WDTO_2S);
+    // init_ports();
+    // init_adc(); // Initialize the ADC
+    // GLCD_Setup();
+    // GLCD_SetFont(Font5x8, 5, 8, GLCD_Overwrite);
+    // BIT_SET(DDRB, PUMP);
+    // BIT_CLEAR(DDRB, PUMP);
+    // _delay_ms(1000);
+    initialize();
     unsigned long current_millis = millis_get();
     unsigned long aliveCounter = current_millis;
     unsigned long soil_sensor_read_time = current_millis;
