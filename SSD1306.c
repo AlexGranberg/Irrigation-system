@@ -44,7 +44,7 @@ void GLCD_Setup(void)
 	#endif
 
 	//Setup I2C hardware
-	__I2C_Setup();
+	//__I2C_Setup();
 
 	//Commands needed for initialization
 	//-------------------------------------------------------------
