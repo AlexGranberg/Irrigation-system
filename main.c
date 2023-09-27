@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <avr/wdt.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include "uart.h"
@@ -20,8 +21,10 @@ int main() {
     millis_init();
     sei();
     unsigned long current_millis = millis_get();
+    unsigned long aliveCounter = millis_get();
     unsigned long soil_sensor_read_time = current_millis;
     unsigned long temp_sensor_read_time = current_millis;
+    wdt_enable(WDTO_2S);
     //init_serial();
     bool pumpActive = false;
     init_ports();
@@ -34,9 +37,12 @@ int main() {
     GLCD_Setup();
     GLCD_SetFont(Font5x8, 5, 8, GLCD_Overwrite);
     BIT_SET(DDRB, PUMP);
+    BIT_CLEAR(DDRB, PUMP);
 
     while (true) {
+        wdt_reset();
         current_millis = millis_get();
+        aliveCounter = millis_get();
         if (current_millis - soil_sensor_read_time >= 6000){
             //GLCD_ClearLine(41);
             //GLCD_Clear();
@@ -60,7 +66,7 @@ int main() {
                 GLCD_GotoXY(1, 32);
                 GLCD_PrintString("Humidity: ");
                 GLCD_PrintInteger(humidity_int / 10);
-                GLCD_PrintString("%   ");
+                GLCD_PrintString("%  ");
                 counter++; 
                 GLCD_PrintInteger(counter);
 
@@ -75,8 +81,11 @@ int main() {
                 GLCD_PrintInteger(status);
             }
             temp_sensor_read_time = current_millis;
-            //BIT_FLIP(PORTB, PUMP);
-        }        
+        }
+        if (current_millis - aliveCounter > 3000){
+            wdt_reset();
+            while(1){}
+        }
 
             
             // GLCD_GotoXY(1, 41);
