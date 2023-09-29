@@ -77,7 +77,7 @@ int main() {
                 GLCD_PrintString("%  ");
                 counter++; 
                 GLCD_PrintInteger(counter);
-                addData("field2", humidity_int);|
+                addData("field2", humidity_int);
 
                 GLCD_GotoXY(1, 16);
                 GLCD_PrintString("Temperature: ");
