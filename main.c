@@ -53,7 +53,9 @@ int main() {
             //GLCD_ClearLine(41);
             //GLCD_Clear();
             uint16_t moisturePercentage = read_Soil();
-           togglePump(moisturePercentage);
+            addData("field1",moisturePercentage);
+            pushData();
+            togglePump(moisturePercentage);
             if(moisturePercentage <= 40 && !pumpActive){
                  BIT_SET(DDRB, PUMP);
                 pumpActive = true;
@@ -75,12 +77,15 @@ int main() {
                 GLCD_PrintString("%  ");
                 counter++; 
                 GLCD_PrintInteger(counter);
+                addData("field2", humidity_int);|
 
                 GLCD_GotoXY(1, 16);
                 GLCD_PrintString("Temperature: ");
                 GLCD_PrintInteger(temperature_int / 10);
                 GLCD_PrintString("c");
                 GLCD_Render();
+                addData("field2", temperature_int);
+                pushData();
             }
             else {
                 GLCD_GotoXY(1, 16);
