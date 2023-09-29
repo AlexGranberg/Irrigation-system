@@ -14,7 +14,7 @@
 #define _CLOSED "CLOSED"
 
 char ssid[] = "EDGG/IoT";
-char psk[] = "!nternet4a!!";					// If no password leave it like this = "";
+char psk[] = "";					// If no password leave it like this = "";
 char api_key[] = "0DDYF5AF1AUWA6P5";			// Api key from ThingSpeak ThingHTTP app
 char api_key_twitter[] = "";					// Api key from ThingSpeak ThingTweet app (optional)
 int port = 80;									// Port for TCP connection

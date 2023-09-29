@@ -11,7 +11,7 @@ LDFLAGS=-mmcu=$(MCU)
 PORT=\\\\.\\COM3
 BIN=Irrigation_System
 OUT=${BIN}.hex 
-SOURCES = main.c uart.c millis.c lcd.c dht22.c yl69.c SSD1306.c TWI.c read_soil.c toggle_pump.c general_functions.c
+SOURCES = main.c uart.c millis.c lcd.c dht22.c yl69.c SSD1306.c TWI.c read_soil.c toggle_pump.c general_functions.c esp8266.c
 
 DEBUG?=1
 
