@@ -15,6 +15,7 @@
 #include "millis.h"
 #include "toggle_pump.h"
 #include "general_functions.h"
+#include "ESP8266.h"
 //#include "timers.h"
 #define PUMP PB1
 
@@ -30,8 +31,9 @@ int main() {
     // BIT_CLEAR(DDRB, PUMP);
     // _delay_ms(1000);
     initialize();
+    ESPinit();
     unsigned long current_millis = millis_get();
-    unsigned long aliveCounter = current_millis;
+    unsigned long aliveCounter = current_millis; //For watchdog
     unsigned long soil_sensor_read_time = current_millis;
     unsigned long temp_sensor_read_time = current_millis;
     

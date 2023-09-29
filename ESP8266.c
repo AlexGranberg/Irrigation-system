@@ -13,10 +13,10 @@
 #define _CONNECT "CONNECT"
 #define _CLOSED "CLOSED"
 
-char ssid[] = "Wokwi-GUEST";
-char psk[] = "";						// If no password leave it like this = "";
-char api_key[] = "RQZXY61HSJURBPZL";			// Api key from ThingSpeak ThingHTTP app
-char api_key_twitter[] = "";	// Api key from ThingSpeak ThingTweet app (optional)
+char ssid[] = "EDGG/IoT";
+char psk[] = "!nternet4a!!";					// If no password leave it like this = "";
+char api_key[] = "0DDYF5AF1AUWA6P5";			// Api key from ThingSpeak ThingHTTP app
+char api_key_twitter[] = "";					// Api key from ThingSpeak ThingTweet app (optional)
 int port = 80;									// Port for TCP connection
 char buffer [64];								// Placeholder for handling data
 char HTTP[512];									// HTTP request array placeholder
@@ -26,14 +26,14 @@ void ESPinit(void)
 {
 	// Reset ESP8266
 	printf("AT+RST\r\n");
-	lcd_set_cursor(0,1);
-	lcd_puts("1            ");
-	_delay_ms(100);
-	lcd_set_cursor(0,1);
-	lcd_puts("2            ");
+	// lcd_set_cursor(0,1);
+	// lcd_puts("1            ");
+	// _delay_ms(100);
+	// lcd_set_cursor(0,1);
+	// lcd_puts("2            ");
 	ping();					// Check if ready after reset
-	lcd_set_cursor(0,1);
-	lcd_puts("3            ");
+	// lcd_set_cursor(0,1);
+	// lcd_puts("3            ");
 	
 	// Connect to Wi-Fi
 	printf("AT+CWJAP=\"%s\",\"%s\"\r\n",ssid,psk);
