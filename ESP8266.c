@@ -8,15 +8,16 @@
 #include <util/delay.h>
 #include "uart.h"
 #include "ESP8266.h"
+#include "SSD1306.h"
 
 #define _OK "OK"
 #define _CONNECT "CONNECT"
 #define _CLOSED "CLOSED"
 
-char ssid[] = "EDGG/IoT";
-char psk[] = "";					// If no password leave it like this = "";
-char api_key[] = "0DDYF5AF1AUWA6P5";			// Api key from ThingSpeak ThingHTTP app
-char api_key_twitter[] = "";					// Api key from ThingSpeak ThingTweet app (optional)
+char ssid[] = "EDGG-IoT";
+char psk[] = "!nternet4a!!";						// If no password leave it like this = "";
+char api_key[] = "WOYYUBP110P72K88";			// Api key from ThingSpeak ThingHTTP app
+char api_key_twitter[] = "";	// Api key from ThingSpeak ThingTweet app (optional)
 int port = 80;									// Port for TCP connection
 char buffer [64];								// Placeholder for handling data
 char HTTP[512];									// HTTP request array placeholder
@@ -24,8 +25,12 @@ int dataCount = 0;
 
 void ESPinit(void)
 {
+	init_serial();
 	// Reset ESP8266
 	printf("AT+RST\r\n");
+	// GLCD_Clear();
+	// GLCD_GotoXY(1, 32);
+    // GLCD_PrintString("Reseting");
 	// lcd_set_cursor(0,1);
 	// lcd_puts("1            ");
 	// _delay_ms(100);

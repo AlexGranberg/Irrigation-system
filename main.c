@@ -30,14 +30,17 @@ int main() {
     // BIT_SET(DDRB, PUMP);
     // BIT_CLEAR(DDRB, PUMP);
     // _delay_ms(1000);
+    //init_serial();
+    //ESPinit();
     initialize();
-    ESPinit();
+
+
     unsigned long current_millis = millis_get();
     unsigned long aliveCounter = current_millis; //For watchdog
     unsigned long soil_sensor_read_time = current_millis;
     unsigned long temp_sensor_read_time = current_millis;
     
-    init_serial();
+
     bool pumpActive = false;
 
     uint16_t temperature_int = 0;
@@ -53,8 +56,8 @@ int main() {
             //GLCD_ClearLine(41);
             //GLCD_Clear();
             uint16_t moisturePercentage = read_Soil();
-            //addData("field1",moisturePercentage);
-            //pushData();
+            // addData("field1",moisturePercentage);
+            // pushData();
             togglePump(moisturePercentage);
             if(moisturePercentage <= 40 && !pumpActive){
                  BIT_SET(DDRB, PUMP);
@@ -84,8 +87,8 @@ int main() {
                 GLCD_PrintInteger(temperature_int / 10);
                 GLCD_PrintString("c");
                 GLCD_Render();
-                //addData("field3", temperature_int);
-                //pushData();
+                // addData("field3", temperature_int);
+                // pushData();
             }
             else {
                 GLCD_GotoXY(1, 16);
